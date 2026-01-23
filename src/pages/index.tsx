@@ -5,13 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "../api/products";
 import ProductSkeleton from "../Components/ProductSkeleton";
 import ProductCard from "../Components/ProductCard";
-import styleInspo1 from "../assets/style_inspo_1.png";
-import styleInspo2 from "../assets/style_inspo_2.png";
-import styleInspo3 from "../assets/style_inspo_3.png";
-import saleModel from "../assets/style_inspo_2.png";
+import styleInspo1 from "../assets/photo_2026-01-23_08-48-52.jpg";
+import styleInspo2 from "../assets/photo_2026-01-23_08-49-19.jpg";
+import styleInspo3 from "../assets/photo_2026-01-23_08-49-42.jpg";
+import saleModel from "../assets/photo_2026-01-23_08-56-51.jpg";
 import HeroSection from "../Components/HeroSection";
 import ImageWithFallback from "../Components/ImageWithFallback";
 import { useInView } from "react-intersection-observer";
+import VideoGallery from "../Components/VideoGallery";
 
 export default function Home() {
   const { ref: popularSectionRef, inView: isInView } = useInView({
@@ -150,6 +151,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Video Gallery Section */}
+      <VideoGallery />
 
       {/* Features / Benefits */}
       <section className="py-24 bg-white border-y border-gray-100">

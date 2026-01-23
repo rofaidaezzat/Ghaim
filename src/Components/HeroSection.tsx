@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import heroImg1 from "../assets/fashion_hero_bg.png";
+import heroImg1 from "../assets/photo_2026-01-23_08-54-12.jpg";
 import ImageWithFallback from "./ImageWithFallback";
 import { useState, useEffect } from "react";
 
