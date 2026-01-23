@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, Send, CheckCircle } from "lucide-react";
 import { useContactUs } from "../api/contactUs";
 
 const ContactUs = () => {
@@ -57,7 +57,7 @@ const ContactUs = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg">Phone</h3>
-                  <a href={`tel:+20 1034511777`} className="text-gray-400 hover:text-white transition-colors" dir="ltr">+20 1034511777</a>
+                  <a href={`tel:01070067386`} className="text-gray-400 hover:text-white transition-colors" dir="ltr">01070067386</a>
                 </div>
               </div>
 
@@ -67,19 +67,7 @@ const ContactUs = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg">Email</h3>
-                  <a href={`mailto:fatmakhalid488@gmail.com`} className="text-gray-400 hover:text-white transition-colors">fatmakhalid488@gmail.com</a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="bg-white/10 p-3 rounded-full">
-                  <MapPin className="w-5 h-5 text-secondary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">Office</h3>
-                  <p className="text-gray-400">
-                   123 Hadayek Al Ahram, High Pressure, Above El Tabbakh Restaurant
-                  </p>
+                  <a href={`mailto:ahmed.mohamed77.abdalla@gmail.com`} className="text-gray-400 hover:text-white transition-colors">ahmed.mohamed77.abdalla@gmail.com</a>
                 </div>
               </div>
             </div>

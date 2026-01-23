@@ -6,7 +6,6 @@ import {
   Linkedin,
   Mail,
   Phone,
-  MapPin,
 } from "lucide-react";
 import logo from "../assets/photo_2026-01-22_22-17-04.jpg";
 import ImageWithFallback from "./ImageWithFallback";
@@ -105,30 +104,23 @@ const Footer = () => {
               Contact Us
             </h3>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-gray-400 text-sm">
-                <MapPin className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
-                <span>
-                  123 Hadayek Al Ahram, High Pressure, Above El Tabbakh
-                  Restaurant
-                </span>
-              </li>
               <li className="flex items-center gap-3 text-gray-400 text-sm">
                 <Mail className="w-5 h-5 text-secondary flex-shrink-0" />
                 <a
-                  href={`mailto:fatmakhalid488@gmail.com`}
+                  href={`mailto:ahmed.mohamed77.abdalla@gmail.com`}
                   className="hover:text-white transition-colors"
                 >
-                  fatmakhalid488@gmail.com
+                  ahmed.mohamed77.abdalla@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-3 text-gray-400 text-sm">
                 <Phone className="w-5 h-5 text-secondary flex-shrink-0" />
                 <a
-                  href={`tel:+20 1034511777`}
+                  href={`tel:01070067386`}
                   className="hover:text-white transition-colors"
                   dir="ltr"
                 >
-                  +20 1034511777
+                  01070067386
                 </a>
               </li>
             </ul>
