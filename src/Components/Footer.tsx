@@ -7,7 +7,7 @@ import {
   Mail,
   Phone,
 } from "lucide-react";
-import logo from "../assets/photo_2026-01-22_22-17-04.jpg";
+import logo from "../assets/Gemini_Generated_Image_ipn3stipn3stipn3-removebg-preview.png";
 import ImageWithFallback from "./ImageWithFallback";
 
 const Footer = () => {

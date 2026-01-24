@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ShoppingBag } from "lucide-react";
 import { useState } from "react";
-
+import logo from "../assets/Gemini_Generated_Image_ipn3stipn3stipn3-removebg-preview.png";
 import { useSelector } from "react-redux";
 import { type RootState } from "../store/store";
 import CartDrawer from "./CartDrawer";
@@ -28,7 +28,9 @@ const Navbar = () => {
       <div className="container mx-auto px-6 py-0">
         <div className="flex items-center justify-between">
           {/* Logo */}
-
+          <Link to="/" className="">
+            <img src={logo} alt="E-Commerce Logo" className="h-24 w-auto" />
+          </Link>
           {/* Desktop Navigation - Centered */}
           <div className="hidden md:flex items-center justify-center absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 gap-8">
             {navLinks.map((link) => (
