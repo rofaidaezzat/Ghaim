@@ -1,11 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ShoppingBag } from "lucide-react";
 import { useState } from "react";
-import logo from "../assets/photo_2026-01-22_22-17-04.jpg";
+
 import { useSelector } from "react-redux";
 import { type RootState } from "../store/store";
 import CartDrawer from "./CartDrawer";
-import ImageWithFallback from "./ImageWithFallback";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,13 +28,6 @@ const Navbar = () => {
       <div className="container mx-auto px-6 py-0">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group relative z-50">
-            <ImageWithFallback
-              src={logo}
-              alt="Fashon Logo"
-              className="h-24 w-24 rounded-none object-cover shadow-sm transition-transform duration-300 group-hover:scale-105"
-            />
-          </Link>
 
           {/* Desktop Navigation - Centered */}
           <div className="hidden md:flex items-center justify-center absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 gap-8">
