@@ -4,7 +4,7 @@ import { removeFromCart, updateQuantity, clearCart } from "../store/cartSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { Trash2, Plus, Minus, ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { createOrder, getShippingPrice, type CreateOrderPayload, type OrderItem } from "../api/orders";
+import { createOrder, type CreateOrderPayload, type OrderItem } from "../api/orders";
 import toast from 'react-hot-toast';
 import { EGYPTIAN_CITIES } from "../data/cities";
 import ImageWithFallback from "../Components/ImageWithFallback";
@@ -29,39 +29,19 @@ const Order = () => {
         district: "",
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [shippingData, setShippingData] = useState<{
-        priceBeforeVat: number;
-        vat: number;
-        priceAfterVat: number;
-    } | null>(null);
-    const [isLoadingShipping, setIsLoadingShipping] = useState(false);
+
 
     const subtotal = cartItems.reduce(
         (acc, item) => acc + item.product.price * item.quantity,
         0
     );
 
-    const total = shippingData ? subtotal + shippingData.priceAfterVat : subtotal;
+    const total = subtotal;
 
     // Fetch shipping when city changes
-    const handleCityChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const city = e.target.value;
         setFormData(prev => ({ ...prev, city }));
-        setShippingData(null); // Reset while fetching
-
-        if (city) {
-            setIsLoadingShipping(true);
-            try {
-                const response = await getShippingPrice(city);
-                if (response.status === "success" && response.data) {
-                    setShippingData(response.data);
-                }
-            } catch (error) {
-                console.error("Failed to fetch shipping price", error);
-                toast.error("Failed to create order");
-            } finally {                setIsLoadingShipping(false);
-            }
-        }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -104,13 +84,13 @@ const Order = () => {
                 userInfo: {
                     name: formData.name,
                     email: formData.email,
+                    phone: formData.phone
                 },
                 cartItems: Array.from(groupedItemsMap.values()),
                 shippingAddress: {
                     city: formData.city,
                     district: formData.district,
-                    details: formData.address,
-                    phone: formData.phone
+                    details: formData.address
                 }
             };
 
@@ -124,7 +104,6 @@ const Order = () => {
                     state: { 
                         orderId: response.data?._id || "N/A", // Assuming response might have ID
                         subtotal,
-                        shipping: shippingData,
                         total
                     } 
                 }); 
@@ -232,27 +211,6 @@ const Order = () => {
                                     <span>Subtotal</span>
                                     <span>EGP {subtotal.toFixed(2)}</span>
                                 </div>
-                                {shippingData ? (
-                                    <>
-                                        <div className="flex justify-between text-sm">
-                                            <span>Shipping</span>
-                                            <span>EGP {shippingData.priceBeforeVat.toFixed(2)}</span>
-                                        </div>
-                                        <div className="flex justify-between text-sm">
-                                            <span>VAT ({(shippingData.vat * 100).toFixed(0)}%)</span>
-                                            <span>EGP {(shippingData.priceAfterVat - shippingData.priceBeforeVat).toFixed(2)}</span>
-                                        </div>
-                                        <div className="flex justify-between text-sm font-medium text-primary">
-                                            <span>Shipping Cost (Inc. VAT)</span>
-                                            <span>EGP {shippingData.priceAfterVat.toFixed(2)}</span>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <div className="flex justify-between text-sm text-gray-400 italic">
-                                        <span>Shipping</span>
-                                        <span>Select city to calculate</span>
-                                    </div>
-                                )}
                             </div>
                             
                             <div className="flex justify-between mb-8 text-xl font-bold text-gray-900 border-t pt-4">
@@ -341,10 +299,10 @@ const Order = () => {
 
                                 <button
                                     type="submit"
-                                    disabled={isSubmitting || (!!formData.city && isLoadingShipping)}
-                                    className={`w-full mt-6 bg-primary text-white py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 ${isSubmitting || isLoadingShipping ? 'opacity-75 cursor-not-allowed' : ''}`}
+                                    disabled={isSubmitting}
+                                    className={`w-full mt-6 bg-primary text-white py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
                                 >
-                                    {isSubmitting ? "Placing Order..." : (isLoadingShipping ? "Calculating Shipping..." : "Place Order")}
+                                    {isSubmitting ? "Placing Order..." : "Place Order"}
                                 </button>
                             </form>
                         </div>
