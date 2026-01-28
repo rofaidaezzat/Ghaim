@@ -12,7 +12,7 @@ import saleModel from "../assets/photo_2026-01-23_08-56-51.jpg";
 import HeroSection from "../Components/HeroSection";
 import ImageWithFallback from "../Components/ImageWithFallback";
 import { useInView } from "react-intersection-observer";
-import VideoGallery from "../Components/VideoGallery";
+
 
 export default function Home() {
   const { ref: popularSectionRef, inView: isInView } = useInView({
