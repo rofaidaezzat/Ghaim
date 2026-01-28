@@ -153,7 +153,7 @@ export default function Home() {
       </section>
 
       {/* Video Gallery Section */}
-      <VideoGallery />
+      {/* <VideoGallery /> */}
 
       {/* Features / Benefits */}
       <section className="py-24 bg-white border-y border-gray-100">
