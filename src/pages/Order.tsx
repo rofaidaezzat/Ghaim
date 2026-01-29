@@ -94,9 +94,6 @@ const Order = () => {
                     city: formData.city,
                     district: formData.district,
                     details: formData.address
-                },
-                paymentInfo: { 
-                   // Add shipping cost here if valid in API
                 }
             };
             
