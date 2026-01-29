@@ -6,8 +6,8 @@ import { Trash2, Plus, Minus, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { createOrder, type CreateOrderPayload, type OrderItem } from "../api/orders";
 import toast from 'react-hot-toast';
-import { EGYPTIAN_CITIES } from "../data/cities";
 import ImageWithFallback from "../Components/ImageWithFallback";
+import { getShippingCost, SHIPPING_RATES } from "../data/shippingRates";
 
 const Order = () => {
     const dispatch = useDispatch();
@@ -29,6 +29,7 @@ const Order = () => {
         district: "",
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [shippingCost, setShippingCost] = useState(0);
 
 
     const subtotal = cartItems.reduce(
@@ -36,11 +37,13 @@ const Order = () => {
         0
     );
 
-    const total = subtotal;
+    const total = subtotal + shippingCost;
 
     // Fetch shipping when city changes
     const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const city = e.target.value;
+        const shipping = getShippingCost(city);
+        setShippingCost(shipping);
         setFormData(prev => ({ ...prev, city }));
     };
 
@@ -91,8 +94,14 @@ const Order = () => {
                     city: formData.city,
                     district: formData.district,
                     details: formData.address
+                },
+                paymentInfo: { 
+                   // Add shipping cost here if valid in API
                 }
             };
+            
+            // If backend accepts shipping/total override, we might add it here, 
+            // but usually backend calculates. For now, we rely on the display.
 
             const response = await createOrder(payload);
 
@@ -102,8 +111,9 @@ const Order = () => {
                 // Navigate to Thank You page with details
                 navigate('/thank-you', { 
                     state: { 
-                        orderId: response.data?._id || "N/A", // Assuming response might have ID
+                        orderId: response.data?._id || "N/A", 
                         subtotal,
+                        shippingCost,
                         total
                     } 
                 }); 
@@ -211,6 +221,10 @@ const Order = () => {
                                     <span>Subtotal</span>
                                     <span>EGP {subtotal.toFixed(2)}</span>
                                 </div>
+                                <div className="flex justify-between">
+                                    <span>Shipping</span>
+                                    <span>{shippingCost > 0 ? `EGP ${shippingCost.toFixed(2)}` : 'Calculated at checkout'}</span>
+                                </div>
                             </div>
                             
                             <div className="flex justify-between mb-8 text-xl font-bold text-gray-900 border-t pt-4">
@@ -266,8 +280,8 @@ const Order = () => {
                                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none bg-white"
                                         >
                                             <option value="">Select City</option>
-                                            {EGYPTIAN_CITIES.map(city => (
-                                                <option key={city} value={city}>{city}</option>
+                                            {Object.keys(SHIPPING_RATES).sort().map(city => (
+                                                <option key={city} value={city}>{city} ({SHIPPING_RATES[city]} EGP)</option>
                                             ))}
                                         </select>
                                     </div>
