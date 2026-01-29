@@ -12,6 +12,7 @@ interface LocationState {
         priceAfterVat: number;
     };
     total?: number;
+    deliveryTime?: string;
 }
 
 const ThankYou = () => {
@@ -78,6 +79,12 @@ const ThankYou = () => {
                             <span>Total Paid</span>
                             <span>EGP {total.toFixed(2)}</span>
                         </div>
+                        {state.deliveryTime && (
+                             <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center bg-blue-50 p-3 rounded-lg text-blue-700">
+                                <span className="font-medium">Estimated Delivery</span>
+                                <span className="font-bold">{state.deliveryTime}</span>
+                            </div>
+                        )}
                     </div>
 
                     <div className="text-center space-y-4">

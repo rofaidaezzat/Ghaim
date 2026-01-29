@@ -1,50 +1,60 @@
 // Mapping of cities to their shipping rates based on the provided sheet
-export const SHIPPING_RATES: Record<string, number> = {
-    "Alexandria": 50,
-    "Cairo": 100,
-    "Giza": 100,
-    "Beheira": 80,
-    "Damanhur": 90,
-    "Sharqia": 120,
+export interface ShippingInfo {
+    cost: number;
+    deliveryTime: string;
+}
+
+export const SHIPPING_RATES: Record<string, ShippingInfo> = {
+    "Alexandria": { cost: 50, deliveryTime: "24 H" },
+    "Cairo": { cost: 100, deliveryTime: "48H" },
+    "Giza": { cost: 100, deliveryTime: "48H" },
+    "Beheira": { cost: 80, deliveryTime: "72H" },
+    "Damanhur": { cost: 90, deliveryTime: "72H" },
+    "Sharqia": { cost: 120, deliveryTime: "72H" },
 
     // Canal Cities
-    "Port Said": 130,
-    "Ismailia": 130,
-    "Suez": 130,
+    "Port Said": { cost: 130, deliveryTime: "72H" },
+    "Ismailia": { cost: 130, deliveryTime: "72H" },
+    "Suez": { cost: 130, deliveryTime: "72H" },
 
     // Delta Cities
-    "Al-Mansura": 140,
-    "Tanta": 140,
-    "El-Mahalla El-Kubra": 140,
-    "Damietta": 140,
-    "Shibin El Kom": 140,
-    "Banha": 140,
-    "Kafr el-Sheikh": 140,
-    "Mit Ghamr": 140,
-    "Desouk": 140,
+    "Al-Mansura": { cost: 140, deliveryTime: "72H" },
+    "Tanta": { cost: 140, deliveryTime: "72H" },
+    "El-Mahalla El-Kubra": { cost: 140, deliveryTime: "72H" },
+    "Damietta": { cost: 140, deliveryTime: "72H" },
+    "Shibin El Kom": { cost: 140, deliveryTime: "72H" },
+    "Banha": { cost: 140, deliveryTime: "72H" },
+    "Kafr el-Sheikh": { cost: 140, deliveryTime: "72H" },
+    "Mit Ghamr": { cost: 140, deliveryTime: "72H" },
+    "Desouk": { cost: 140, deliveryTime: "72H" },
 
     // Middle/Upper Egypt
-    "Beni Suef": 130,
-    "Minya": 140,
-    "Sohag": 150,
+    "Beni Suef": { cost: 130, deliveryTime: "3-4 days" },
+    "Minya": { cost: 140, deliveryTime: "3-4 days" },
+    "Sohag": { cost: 150, deliveryTime: "3-4 days" },
 
-    // Deep Upper Egypt (160/170 range - favoring 170 for coverage or split if needed)
-    "Qena": 160,
-    "Luxor": 170,
-    "Aswan": 170,
+    // Deep Upper Egypt
+    "Qena": { cost: 160, deliveryTime: "4-5 days" },
+    "Luxor": { cost: 170, deliveryTime: "4-5 days" },
+    "Aswan": { cost: 170, deliveryTime: "4-5 days" },
 
     // Red Sea / Sinai
-    "Hurghada": 180,
-    "Ain Sokhna": 160,
-    "Sharm El Sheikh": 180,
-    "Arish": 180,
+    "Hurghada": { cost: 180, deliveryTime: "5-6 days" },
+    "Ain Sokhna": { cost: 160, deliveryTime: "5-6 days" },
+    "Sharm El Sheikh": { cost: 180, deliveryTime: "5-6 days" },
+    "Arish": { cost: 180, deliveryTime: "5-6 days" },
 
     // Coast
-    "Sahel": 80,
-    "Marsa Matruh": 85
+    "Sahel": { cost: 80, deliveryTime: "2days" },
+    "Marsa Matruh": { cost: 85, deliveryTime: "2days" }
 };
 
 export const getShippingCost = (city: string): number => {
     if (!city) return 0;
-    return SHIPPING_RATES[city] || 0; // Return 0 if not found so we can detect invalid selection if needed, or default
+    return SHIPPING_RATES[city]?.cost || 0;
+};
+
+export const getDeliveryTime = (city: string): string => {
+    if (!city) return "";
+    return SHIPPING_RATES[city]?.deliveryTime || "";
 };

@@ -7,7 +7,7 @@ import { useState } from "react";
 import { createOrder, type CreateOrderPayload, type OrderItem } from "../api/orders";
 import toast from 'react-hot-toast';
 import ImageWithFallback from "../Components/ImageWithFallback";
-import { getShippingCost, SHIPPING_RATES } from "../data/shippingRates";
+import { getShippingCost, SHIPPING_RATES, getDeliveryTime } from "../data/shippingRates";
 
 const Order = () => {
     const dispatch = useDispatch();
@@ -93,8 +93,10 @@ const Order = () => {
                 shippingAddress: {
                     city: formData.city,
                     district: formData.district,
-                    details: formData.address
-                }
+                  details: formData.address
+                },
+                shippingPrice: shippingCost,
+                deliveryTime: getDeliveryTime(formData.city)
             };
             
             // If backend accepts shipping/total override, we might add it here, 
@@ -111,7 +113,8 @@ const Order = () => {
                         orderId: response.data?._id || "N/A", 
                         subtotal,
                         shippingCost,
-                        total
+                        total,
+                        deliveryTime: getDeliveryTime(formData.city)
                     } 
                 }); 
             } else {
@@ -278,7 +281,9 @@ const Order = () => {
                                         >
                                             <option value="">Select City</option>
                                             {Object.keys(SHIPPING_RATES).sort().map(city => (
-                                                <option key={city} value={city}>{city} ({SHIPPING_RATES[city]} EGP)</option>
+                                                <option key={city} value={city}>
+                                                    {city} ({SHIPPING_RATES[city].cost} EGP - {SHIPPING_RATES[city].deliveryTime})
+                                                </option>
                                             ))}
                                         </select>
                                     </div>

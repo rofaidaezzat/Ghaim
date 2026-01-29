@@ -28,6 +28,8 @@ export interface CreateOrderPayload {
     userInfo: UserInfo;
     cartItems: OrderItem[];
     shippingAddress: ShippingAddress;
+    shippingPrice: number;
+    deliveryTime: string;
 }
 
 export interface CreateOrderResponse {
